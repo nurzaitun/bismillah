@@ -1,0 +1,75 @@
+<div class="sidebar-wrapper active">
+  <div class="sidebar-header text-center">
+    <!--
+    <img src="assets/images/logo.svg" alt="" srcset="">
+    -->
+    NS
+  </div>
+  <div class="sidebar-menu">
+    <ul class="menu">
+      <!--
+      <li class='sidebar-title'>Main Menu</li>
+      -->
+
+      <li class="sidebar-item {{ url == route('IndexController.index') ? 'active' : '' }}">
+        <a href="/" class='sidebar-link'>
+          <i data-feather="home" width="20"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.create') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.create') }}" class='sidebar-link'>
+          <i data-feather="upload" width="20"></i>
+          <span>Load Data</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.index') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.index') }}" class='sidebar-link'>
+          <i data-feather="list" width="20"></i>
+          <span>History</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.preprocess') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.preprocess') }}" class='sidebar-link'>
+          <i data-feather="loader" width="20"></i>
+          <span>Hasil Preprocessing</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.cluster') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.cluster') }}" class='sidebar-link'>
+          <i data-feather="divide-circle" width="20"></i>
+          <span>Hasil Clustering</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.clusterChart') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.clusterChart') }}" class='sidebar-link'>
+          <i data-feather="bar-chart-2" width="20"></i>
+          <span>Grafik Clustering</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('ArticleController.knn') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.knn') }}" class='sidebar-link'>
+          <i data-feather="refresh-ccw" width="20"></i>
+          <span>Proses KNN</span>
+        </a>
+      </li>
+      <li class="sidebar-item {{ url == route('IndexController.index') ? 'active' : '' }}">
+        <a href="/" class='sidebar-link'>
+          <i data-feather="sun" width="20"></i>
+          <span>About</span>
+        </a>
+      </li>
+
+      @if(config.get('app.env') === 'development')
+        <li class='sidebar-title'>Example</li>
+        <li class='sidebar-item {{ url == route('RegistrationController.index') ? 'active' : '' }}'>
+          <a href="/crud" class='sidebar-link'>
+            <i data-feather="file-text" width="20"></i>
+            <span>CRUD Example</span>
+          </a>
+        </li>
+      @endif
+    </ul>
+  </div>
+  <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>

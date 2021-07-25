@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title || 'Dashboard' }}</title>
+
+  <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+  {{ style('assets/css/bootstrap') }}
+  {{ style('assets/vendors/perfect-scrollbar/perfect-scrollbar') }}
+  {{ style('assets/css/app') }}
+  @!section('css')
+</head>
+
+<body>
+  <div id="app">
+    <div id="sidebar" class='active'>
+      @include('_partial/default-sidebar')
+    </div>
+    <div id="main">
+      @include('_partial/default-navbar')
+
+      <div class="main-content container-fluid">
+        @!section('heading')
+        <section class="section">
+          @!section('content')
+        </section>
+      </div>
+
+    </div>
+  </div>
+  {{ script('assets/js/feather-icons/feather.min') }}
+  {{ script('assets/vendors/perfect-scrollbar/perfect-scrollbar.min') }}
+  {{ script('assets/vendors/jquery/jquery.min') }}
+  {{ script('assets/js/app') }}
+  {{ script('assets/js/main') }}
+
+  @!section('js')
+</body>
+
+</html>

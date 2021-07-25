@@ -1,0 +1,9 @@
+python-dotenv
+mysql.connector
+pandas
+numpy
+langdetect
+nltk
+matplotlib
+scikit-learn
+Flask

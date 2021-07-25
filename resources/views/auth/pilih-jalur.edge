@@ -1,0 +1,165 @@
+@layout('_layout/public')
+
+@section('content')
+<div id="auth">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 mx-auto">
+                <div class="card pt-4">
+                    <div class="card-body">
+                        <div class="text-center mb-5">
+                            <h3>Pilih Jalur Pendaftaran</h3>
+                        </div>
+
+                        <div class="container">
+                          <form id="" data-toggle="validator" method="POST">
+                            <fieldset>
+                              <div class="form-group row">
+                                <label for="pilih_jalur" class="col-lg-10 col-form-label">Pilih Jalur Pendaftaran</label>
+                                <select class="form-select" id="pilih_jalur" aria-label=".form-select-sm example">
+                                  <option selected>Pilih Jalur</option>
+                                  <option value="zonasi">Zonasi</option>
+                                  <option value="afirmasi">Afirmasi</option>
+                                  <option value="pindah_domisili_orang_tua">Pindah Domisili Orang Tua</option>
+                                  <option value="prestasi">Prestasi</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                              </div>
+
+                              <!-- zonasi
+                              <div class="form-group row zonasi">
+                                <input placeholder="zonasi" class="form-control" name="zonasi" type="text" id="zonasi" data-minlength="2" data-error="Please enter a valid name." required/>
+                                <div class="help-block with-errors"></div>
+                              </div>
+                              -->
+
+                              <!-- afirmasi -->
+                              <div id="afirmasi_form">
+                                <div class="form-group row afirmasi">
+                                  <label for="no_surat_afirmasi" class="form-label">No. KIP/KKS/KPS</label>
+                                  <input class="form-control" name="afirmasi" type="text" id="afirmasi" data-minlength="2" data-error="Please enter a valid name." required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group row afirmasi mb-3">
+                                  <label for="scan_afirmasi" class="form-label">Unggah scan KIP/KKS/KPS</label>
+                                  <input class="form-control form-control-sm" id="scan_afirmasi" type="file">
+                                </div>
+                              </div>
+
+                              <!-- domisili -->
+                              <div id="domisili_form">
+                                <div class="form-group row pindah_domisili_orang_tua">
+                                  <label for="no_surat_pindah_domisili">No. SK Pindah Domisili</label>
+                                  <input class="form-control" name="pindah_domisili_orang_tua" type="text" id="pindah_domisili_orang_tua" data-minlength="2" data-error="Please enter a valid name." required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group row pindah_domisili_orang_tua mb-3">
+                                  <label for="scan_pindah_domisili" class="form-label">Unggah scan SK Pindah Domisili</label>
+                                  <input class="form-control form-control-sm" id="scan_pindah_domisili" type="file">
+                                </div>
+                              </div>
+
+                              <!-- prestasi -->
+                                <div id="prestasi_form">
+                                <div class="form-group row prestasi">
+                                  <label for="prestasi_1">Prestasi 1</label>
+                                  <input class="form-control" name="prestasi_1" type="text" id="prestasi_1" data-minlength="2" data-error="Please enter a valid name." required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group row prestasi mb-3">
+                                  <label for="scan_prestasi_1" class="form-label">Unggah scan Prestasi 1</label>
+                                  <input class="form-control form-control-sm" id="scan_prestasi_1" type="file">
+                                </div>
+
+                                <div class="form-group row prestasi">
+                                  <label for="prestasi_2">Prestasi 2</label>
+                                  <input class="form-control" name="prestasi_2" type="text" id="prestasi_2" data-minlength="2" data-error="Please enter a valid name." required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group row prestasi mb-3">
+                                  <label for="scan_prestasi_2" class="form-label">Unggah scan Prestasi 2</label>
+                                  <input class="form-control form-control-sm" id="scan_prestasi_2" type="file">
+                                </div>
+
+                                <div class="form-group row prestasi">
+                                  <label for="prestasi_3">Prestasi 3</label>
+                                  <input class="form-control" name="prestasi_3" type="text" id="prestasi_3" data-minlength="2" data-error="Please enter a valid name." required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+
+                                <div class="form-group row prestasi mb-3">
+                                  <label for="scan_prestasi_3" class="form-label">Unggah scan Prestasi 3</label>
+                                  <input class="form-control form-control-sm" id="scan_prestasi_3" type="file">
+                                </div>
+                              </div>
+
+                              <!-- submit form -->
+                              <div class="text-right">
+                                <button type="button" class="btn" id="cancel" onclick="window.location.href=''">Batalkan</button>
+                                <button type="submit" class="btn btn-primary" id="submit">Kirim</button>
+                              </div>
+                            </fieldset>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ script('assets/vendors/jquery/jquery.min') }}
+
+<script>
+  jQuery(document).ready(function($) {
+  // sembunyikan semua class ketika awal
+  //$('.zonasi').hide();
+  $('.afirmasi').hide();
+  $('.pindah_domisili_orang_tua').hide();
+  $('.prestasi').hide();
+
+  /* sembunyikan sesuai nilai function yang dimiliki oleh id $("#pilih_jalur")*/
+  $("#pilih_jalur").change(function() {
+
+    // Hide them again, because some of them are shown at the end
+    //$('.zonasi').hide();
+    $('.afirmasi').hide();
+    $('.pindah_domisili_orang_tua').hide();
+    $('.prestasi').hide();
+
+    // Loop is not necessary, just get the value from the select field.
+    var selectValue = $(this).val();
+
+    // Use switch for cleaner code
+    switch (selectValue) {
+        //case "zonasi":
+          //$('.zonasi').show();
+          //break;
+        case "afirmasi":
+          $('.afirmasi').show();
+          //js for disable different form if condition true
+          $("#domisili_form *").prop('disabled',true);
+          $("#prestasi_form *").prop('disabled',true);
+          break;
+        case "pindah_domisili_orang_tua":
+          $('.pindah_domisili_orang_tua').show();
+          //js for disable different form if condition true
+          $("#afirmasi_form *").prop('disabled',true);
+          $("#prestasi_form *").prop('disabled',true);
+          break;
+        case "prestasi":
+          $('.prestasi').show();
+          //js for disable different form if condition true
+          $("#afirmasi_form *").prop('disabled',true);
+          $("#domisili_form *").prop('disabled',true);
+          break;
+      }
+
+  });
+  });
+</script>
+@endsection

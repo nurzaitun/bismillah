@@ -1,0 +1,97 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+@endsection
+
+@section('heading')
+<div class="page-title">
+  <h3>Detail Sekolah</h3>
+  <p class="text-subtitle text-muted">Detail sekolah {{ school.nama }}.</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div>
+          <h3 class="m-0">Informasi Dasar</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <table>
+          <tr><td><b>Nama</b></td><td>: {{ school.nama }}</td></tr>
+          <tr><td><b>NPSN</b></td><td>: {{ school.npsn }}</td></tr>
+          <tr><td><b>Wilayah</b></td><td>: {{ school.wilayah.nama }}</td></tr>
+          <tr><td><b>Bentuk Pendidikan</b></td><td>: {{ school.bentukPendidikan.nama }}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div>
+          <h3 class="m-0">Akun</h3>
+        </div>
+        <div>
+          <a href="{{ route('SchoolAccountController.create', { schools_id: request.params.id }) }}" class="btn btn-primary">
+            Tambah Data
+          </a>
+        </div>
+      </div>
+      @if(flashMessage('account-success'))
+        <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('account-success') }}</div>
+      @endif
+      <div class="card-body">
+
+        <table class="table table-striped" id="table">
+          <thead>
+              <tr>
+                <th>Nomor HP</th>
+                <th>Nama</th>
+                <th>Actions</th>
+                <!--
+                <th>Actions</th>
+                -->
+              </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery/jquery.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+
+<script>
+  $(document).ready(function() {
+    const table = $('#table').DataTable({
+      serverSide: true,
+      ajax: "{{ route('SchoolAccountController.datatable', { schools_id: request.params.id }) }}",
+      columns: [
+        { "data": "phone" },
+        { "data": "fullname" },
+        { "data": "id", render: function(data, type, row, meta) {
+          return '<a href="/schools/'+ data +'">' + data + '</a>';
+        } },
+      ],
+      language: {
+        search: 'Cari',
+        paginate: {
+          previous: '<<',
+          next: '>>',
+        },
+      },
+    });
+  });
+</script>
+@endsection

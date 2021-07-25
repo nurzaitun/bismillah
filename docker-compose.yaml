@@ -1,0 +1,41 @@
+version: "3.0"
+
+services:
+  app:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_PASSWORD: 123123123
+      POSTGRES_DB: ppdb_db
+      HOST: 0.0.0.0
+      PORT: 8080
+      APP_URL: http://${HOST}:${PORT}
+      CACHE_VIEWS: "true"
+      APP_KEY: C7IzSLGD1FjUkaP3EjLO0sGzOYEdsCeA
+      DB_CONNECTION: pg
+      DB_HOST: db
+      DB_PORT: 54433
+      DB_USER: postgres
+      DB_PASSWORD: 123123123
+      DB_DATABASE: ppdb_db
+      SESSION_DRIVER: cookie
+      HASH_DRIVER: bcrypt
+  db:
+    container_name: ppdb_db
+    image: postgres:9.6-alpine
+    ports:
+      - "54433:5432"
+    environment:
+      POSTGRES_PASSWORD: 123123123
+      POSTGRES_DB: ppdb_db
+    volumes:
+      - db-data:/var/lib/postgresql
+volumes:
+  db-data:

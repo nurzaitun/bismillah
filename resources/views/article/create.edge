@@ -1,0 +1,109 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+@endsection
+
+@section('heading')
+<div class="page-title">
+  <h3>Load Data</h3>
+  <p class="text-subtitle text-muted">Input data artikel.</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <form action="{{ route('ArticleController.store') }}" method="POST">
+      {{ csrfField() }}
+
+      <div class="card">
+        {{ elIf('<div class="alert alert-danger" style="border-radius: 0">$self</div>', getErrorFor('fail'), hasErrorFor('fail')) }}
+
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col col-6">
+              <label for="">NIDN</label>
+              <div class="form-group">
+                <input type="number" class="form-control" required name="nidn" value="{{ old('nidn', '') }}">
+              </div>
+            </div>
+            <div class="col col-6">
+              <label for="">ID User Google Scholar</label>
+              <div class="form-group">
+                <input type="text" class="form-control" required name="google_scholar_id" value="{{ old('google_scholar_id', '') }}">
+                <small>Contoh: g2K8w6gXXXXX</small>
+              </div>
+            </div>
+            <div class="col col-6">
+              <label for="">NIY</label>
+              <div class="form-group">
+                <input type="number" class="form-control" required name="niy" value="{{ old('niy', '') }}">
+              </div>
+            </div>
+            <div class="col col-6">
+              <label for="">Nama</label>
+              <div class="form-group">
+                <input type="text" class="form-control" required name="nama" value="{{ old('nama', '') }}">
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Tambah</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-12">
+    <section class="section">
+
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        <div class="card-body">
+            <table class='table table-striped' id="table">
+                <thead>
+                  <tr>
+                    <th>ID Google Scholar</th>
+                    <th>NIDN</th>
+                    <th>NIY</th>
+                    <th>Nama</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @each(author in authors)
+                    <tr>
+                      <td>
+                        {{ author.google_scholar_id }}
+                      </td>
+                      <td>{{ author.nidn }}</td>
+                      <td>{{ author.niy }}</td>
+                      <td>{{ author.nama }}</td>
+                      <td>
+                        <a class="mx-1 btn btn-success btn-sm" title="ubah" href="{{author.id}}/edit">
+                          <i data-feather="edit" width="20"></i>
+                        </a>
+                        <a class="mx-1 btn btn-danger btn-sm" title="ubah" href="{{author.id}}/delete">
+                          <i data-feather="trash" width="20"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  @endeach
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery/jquery.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+@endsection

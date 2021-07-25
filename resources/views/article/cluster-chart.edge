@@ -1,0 +1,47 @@
+@layout('_layout/default')
+
+@section('heading')
+<div class="page-title">
+  <h3>Grafik Clustering</h3>
+  <p class="text-subtitle text-muted">Ringkasan hasil clustering dalam bentuk grafik.</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section class="section">
+
+      <div class="card">
+        <div class="card-body">
+          <div id="chart"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+  const chart = new ApexCharts(document.querySelector('#chart'), {
+    chart: {
+      height: 450,
+      type: "radar",
+      stacked: false
+    },
+    series: [
+      {
+        name: "Data 1",
+        data: [45, 52, 38, 24, 33, 10]
+      },
+      {
+        name: "Data 2",
+        data: [26, 21, 20, 36, 38, 35]
+      },
+    ],
+  });
+  chart.render();
+</script>
+@endsection

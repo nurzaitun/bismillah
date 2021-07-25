@@ -1,0 +1,94 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+@endsection
+
+@section('heading')
+<div class="page-title">
+  <h3>Data Artikel</h3>
+  <p class="text-subtitle text-muted">Data artikel yang telah dimasukkan.</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section class="section">
+
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        <div class="card-body">
+            <table class='table table-striped' id="table">
+                <thead>
+                    <tr>
+                      <!--
+                        <th>NIDN</th>
+                        <th>NIY</th>
+                        <th>Nama</th>
+                      -->
+                        <th>Title</th>
+                      <!--
+                        <th>Authors</th>
+                        <th>Venue</th>
+                        <th>Year</th>
+                      -->
+                        <th>Preprocessing Judul</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(article in articles)
+                    <tr>
+                      <!--
+                      <td>{{ article.nidn }}</td>
+                      <td>{{ article.niy }}</td>
+                      <td>{{ article.nama }}</td>
+                      -->
+                      <td>{{ article.title }}</td>
+                      <!--
+                      <td>{{ article.authors }}</td>
+                      <td>{{ article.venue }}</td>
+                      <td>{{ article.year }}</td>
+                      -->
+                      <td>{{ article.stemmed_title }}</td>
+                    </tr>
+                  @endeach
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+
+<script>
+  // $(document).ready(function() {
+    const table = $('#table').DataTable({
+  //     serverSide: true,
+  //     ajax: "{{ route('SchoolController.datatable') }}",
+  //     columns: [
+  //       { "data": "npsn", render: function(data, type, row, meta) {
+  //         return '<a href="/schools/'+ data +'">' + data + '</a>';
+  //       } },
+  //       { "data": "nama" },
+  //       { "data": "bentukPendidikan.nama" },
+  //       { "data": "wilayah.nama" },
+  //     ],
+  //     language: {
+  //       search: 'Cari',
+  //       paginate: {
+  //         previous: '<<',
+  //         next: '>>',
+  //       },
+  //     },
+    });
+  // });
+</script>
+@endsection

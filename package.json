@@ -1,0 +1,47 @@
+{
+  "name": "adonis-fullstack-app",
+  "version": "4.1.0",
+  "adonis-version": "4.1.0",
+  "description": "The fullstack application boilerplate for Adonisjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run start:dev",
+    "start:dev": "cross-env NODE_ENV=development adonis serve --dev",
+    "start:run": "cross-env NODE_ENV=production node server.js",
+    "start": "concurrently --kill-others \"python3 cluster.py\" \"npm run start:run\" ",
+    "test": "node ace test"
+  },
+  "keywords": [
+    "adonisjs",
+    "adonis-app"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@adonisjs/ace": "^5.0.8",
+    "@adonisjs/auth": "^3.0.7",
+    "@adonisjs/bodyparser": "~2.0.9",
+    "@adonisjs/cors": "^1.0.7",
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/framework": "^5.0.9",
+    "@adonisjs/ignitor": "^2.0.8",
+    "@adonisjs/lucid": "^6.3.0",
+    "@adonisjs/session": "^1.0.27",
+    "@adonisjs/shield": "^1.0.8",
+    "@adonisjs/validator": "^5.1.0",
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.9",
+    "html-minifier": "^4.0.0",
+    "mysql2": "^2.2.5",
+    "pg": "^8.6.0"
+  },
+  "autoload": {
+    "App": "./app"
+  },
+  "devDependencies": {
+    "@adonisjs/cli": "^4.0.13",
+    "concurrently": "^6.2.0",
+    "cross-env": "^5.2.1"
+  }
+}

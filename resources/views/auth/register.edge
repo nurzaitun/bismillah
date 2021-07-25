@@ -1,0 +1,372 @@
+@layout('_layout/public')
+
+@section('css')
+{{ style('assets/vendors/bs-stepper/bs-stepper.min') }}
+
+@endsection
+
+@section('content')
+<div id="auth">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-sm-12 mx-auto">
+        <div class="card pt-4">
+          <div class="card-body">
+            <div class="text-center mb-5">
+              <h3>Mendaftar ke NS</h3>
+            </div>
+            <div class="bs-stepper">
+              <div class="bs-stepper-header" role="tablist">
+                <!-- your steps here -->
+                <div class="step" data-target="#jenjang-part">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="jenjang-part"
+                    id="jenjang-part-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">Jenjang<br />Pendidikan</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#information-part">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="information-part"
+                    id="information-part-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Data Diri</span>
+                  </button>
+                </div>
+              </div>
+              <div class="bs-stepper-content">
+                <form method="POST" action="">
+                  <div id="jenjang-part" class="content text-center" role="tabpanel"
+                    aria-labelledby="jenjang-part-trigger">
+                    <h5>Pilih Jenjang Pendidikan</h5>
+                    <div class="mt-3">
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label border rounded p-5" for="inlineRadio1">
+                          <input class="form-check-input" type="radio" name="jenjang_pendidikan" id="inlineRadio1" value="sd">
+                          SD
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label border rounded p-5" for="inlineRadio2">
+                          <input class="form-check-input" type="radio" name="jenjang_pendidikan" id="inlineRadio2" value="smp">
+                          SMP
+                        </label>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <button type="button" id="pilih_jenjang" class="btn btn-primary" onclick="stepper.next()">Lanjut</button>
+                    </div>
+                  </div>
+                  <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+
+                    <!-- FORM DATA DIRI DI SINI -->
+                    <!-- form SD -->
+                    <div class="sd" id="sd_form">
+                      <div class="form-group position-relative">
+                          <label for="nama">nama</label>
+                          <input type="text" class="form-control" id="nama" required>
+                          <div class="form-control-icon">
+                              <i data-feather="user"></i>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative">
+                          <label for="no_hp_ortu">No. Handphone Orang Tua</label>
+                          <input class="form-control" id="no_hp_ortu" placeholder="Hanya gunakan angka" onkeypress="return validateNumber(event)" required>
+                          <div class="form-control-icon">
+                              <i data-feather="user"></i>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative has-icon-left">
+                          <div class="clearfix">
+                              <label for="password">Password</label>
+                          </div>
+                          <div class="position-relative">
+                              <input type="password" class="form-control" id="passwordSd" required>
+                              <br>
+                              <input type="checkbox" onclick="showPassword()">Tunjukkan Password
+                              <div class="form-control-icon">
+                                  <i data-feather="lock"></i>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="email_ortu">Email Orang Tua</label>
+                        <input type="text" class="form-control" id="email_ortu" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="NIK">NIK calon siswa</label>
+                        <input class="form-control" id="NIK" placeholder="Hanya gunakan angka" onkeypress="return validateNumber(event)" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="tempat_lahir">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="tempat_lahir" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="tanggal_lahir">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="tanggal_lahir" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label id=”jk” style=”width:250px;”></label><br>
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <br>
+                        <label for="laki-laki" class="radio-inline">
+                          <input type="radio" id="laki-laki" name="jk" value="laki-laki" required>
+                          Laki-laki
+                        </label>
+                        <label for="perempuan" class="radio-inline">
+                          <input type="radio" id="perempuan" name="jk" value="perempuan">
+                          Perempuan
+                        </label><br>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nama_ibu">Nama Ibu Kandung</label>
+                        <input type="text" class="form-control" id="nama_ibu" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nama_ayah">Nama Ayah Kandung</label>
+                        <input type="text" class="form-control" id="nama_ayah" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="alamat">Alamat</label>
+                        <input type="text" class="form-control" id="alamat" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="scan_akte_kelahiran" class="form-label">Unggah Scan Akte Kelahiran (file .pdf maks. 500KB)</label>
+                        <input class="form-control form-control-sm" id="scan_akte_kelahiran" type="file">
+                      </div>
+                      <div class="mb-3">
+                        <label for="scan_kk" class="form-label">Unggah scan KK (file .pdf maks. 500KB)</label>
+                        <input class="form-control form-control-sm" id="scan_kk" type="file">
+                      </div>
+                      <div class="mb-3">
+                        <label for="scan_rapor" class="form-label">Unggah scan raport kelas 4,5,6 semester 1 dan 2 (file .pdf maks. 500KB)</label>
+                        <input class="form-control form-control-sm" id="scan_rapor" type="file">
+                      </div>
+                    </div>
+                    <!-- end of form SD -->
+
+                    <!-- form SMP -->
+                    <div class="smp" id="smp_form">
+                      <div class="form-group position-relative">
+                          <label for="NISN">NISN</label>
+                          <input class="form-control" id="NISN" placeholder="Hanya gunakan angka" onkeypress="return validateNumber(event)" required>
+                          <div class="form-control-icon">
+                              <i data-feather="user"></i>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative">
+                          <label for="nama">nama</label>
+                          <input type="text" class="form-control" id="nama" required>
+                          <div class="form-control-icon">
+                              <i data-feather="user"></i>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative">
+                          <label for="no_hp_ortu">No. Handphone Orang Tua</label>
+                          <input class="form-control" id="no_hp_ortu" placeholder="Hanya gunakan angka" onkeypress="return validateNumber(event)" required>
+                          <div class="form-control-icon">
+                              <i data-feather="user"></i>
+                          </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="no_hp_siswa">No. Handphone Siswa</label>
+                        <input class="form-control" id="no_hp_siswa" placeholder="Hanya gunakan angka" onkeypress="return validateNumber(event)" required>
+                          <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative has-icon-left">
+                        <div class="clearfix">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="position-relative">
+                            <input type="password" class="form-control" id="passwordSmp" required>
+                            <br>
+                            <input type="checkbox" onclick="showPassword()">Tunjukkan Password
+                            <div class="form-control-icon">
+                                <i data-feather="lock"></i>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_4_smt_1">Nilai kelas 4 semester 1</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_4_smt_1">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_4_smt_2">Nilai kelas 4 semester 2</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_4_smt_2">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_5_smt_1">Nilai kelas 5 semester 1</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_5_smt_1">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_5_smt_2">Nilai kelas 5 semester 2</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_5_smt_2">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_6_smt_1">Nilai kelas 6 semester 1</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_6_smt_1">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="nilai_rapor_kelas_6_smt_2">Nilai kelas 6 semester 2</label>
+                        <input type="text" class="form-control" id="nilai_rapor_kelas_6_smt_2">
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="scan_rapor" class="form-label">Unggah scan raport kelas 4,5,6 semester 1 dan 2 (file .pdf maks. 500KB)</label>
+                        <input class="form-control form-control-sm" id="scan_rapor" type="file">
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="asal_sd">Asal Sekolah Dasar</label>
+                        <input type="text" class="form-control" id="asal_sd" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="NPSN">NPSN SD</label>
+                        <input type="text" class="form-control" id="NPSN" required>
+                        <div class="form-control-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end of form SMP -->
+
+                    <div class="text-right">
+                      <button type="button" class="btn" onclick="stepper.previous()">Kembali</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            Sudah memiliki akun?
+            <a href="{{ route('AuthController.login') }}">Masuk</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery/jquery.min') }}
+{{ script('assets/vendors/bs-stepper/bs-stepper.min') }}
+<script>
+  var stepper = new Stepper($('.bs-stepper')[0]);
+</script>
+
+<script>
+  //js to change type of pilih pilihan jenjang form
+  jQuery(document).ready(function($) {
+
+  /* sembunyikan sesuai nilai function yang dimiliki oleh id $("#pilih_jenjang")*/
+  $("#pilih_jenjang").click(function(){
+
+    // Hide them again, because some of them are shown at the end
+    $('.sd').hide();
+    $('.smp').hide();
+
+    // Loop is not necessary, just get the value from the select field.
+    var selectValue = $("input[name='jenjang_pendidikan']:checked").val();
+
+    // Use switch for cleaner code
+    switch (selectValue) {
+        case "sd":
+          $('.sd').show();
+          //js for disable different form if condition true
+          $("#smp_form *").prop('disabled',true);
+          break;
+        case "smp":
+          $('.smp').show();
+          //js for disable different form if condition true
+          $("#sd_form *").prop('disabled',true);
+          break;
+      }
+
+  });
+  });
+</script>
+
+<script>
+  //js for validate number form
+  function validateNumber(e) {
+            const pattern = /^[0-9]$/;
+
+            return pattern.test(e.key);
+        }
+</script>
+
+<script>
+  //js for show password
+  function showPassword() {
+    var passSd = document.getElementById("passwordSd");
+    if (passSd.type === "password") {
+      passSd.type = "text";
+    } else {
+      passSd.type = "password";
+    }
+
+    var passSmp = document.getElementById("passwordSmp");
+    if (passSmp.type === "password") {
+      passSmp.type = "text";
+    } else {
+      passSmp.type = "password";
+    }
+  }
+</script>
+
+@endsection

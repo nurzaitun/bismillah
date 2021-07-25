@@ -1,0 +1,25 @@
+version: "3.0"
+
+services:
+  app:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+  db:
+    container_name: ppdb_db
+    image: postgres:9.6-alpine
+    ports:
+      - "54433:5432"
+    environment:
+      POSTGRES_PASSWORD: 123123123
+      POSTGRES_DB: ppdb_db
+    volumes:
+      - db-data:/var/lib/postgresql
+volumes:
+  db-data:
