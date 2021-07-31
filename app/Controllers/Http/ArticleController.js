@@ -6,6 +6,7 @@ const cheerio = require("cheerio");
 const minify = use("App/Helpers/Minify");
 const Article = use("App/Models/Article");
 const Author = use("App/Models/Author");
+const Stemmed = use("App/Models/Stemmed");
 
 class ArticleController {
   async index({ response, view }) {
@@ -174,6 +175,7 @@ class ArticleController {
   }
 
   async preprocess({ session, response, view }) {
+    await Stemmed.truncate();
     const articlesQ = await Article.all();
     const articles = articlesQ.toJSON();
 
@@ -181,9 +183,9 @@ class ArticleController {
     const preprocess = res.data;
     if (res) {
       const stemTitle = res.data.map((title) => ({
-        id: title.id,
-        stem_title: title.stemmed_title,
+        title: title.stemmed_title,
       }));
+      await Stemmed.createMany(stemTitle);
     }
 
     const result = preprocess.map((article) => {
@@ -243,14 +245,14 @@ class ArticleController {
 
   async knn({ session, response, view }) {
     // const articlesQ = await Article.all();
+    const stemmedJos = await Stemmed.all();
     // const articles = articlesQ.toJSON();
-    const stemTitle = session.get("stem_title");
-    console.log(session.all());
+    const stemmed = stemmedJos.toJSON();
 
     return minify(
       view.render("article/knn", {
         title: "Proses KNN",
-        articles: stemTitle,
+        articles: stemmed,
       })
     );
   }
