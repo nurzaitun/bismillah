@@ -6,7 +6,7 @@ const cheerio = require("cheerio");
 const minify = use("App/Helpers/Minify");
 const Article = use("App/Models/Article");
 const Author = use("App/Models/Author");
-const Stemmed = use("App/Models/Stemmed");
+const Cluster = use("App/Models/Cluster");
 
 class ArticleController {
   async index({ response, view }) {
@@ -175,18 +175,11 @@ class ArticleController {
   }
 
   async preprocess({ session, response, view }) {
-    await Stemmed.truncate();
     const articlesQ = await Article.all();
     const articles = articlesQ.toJSON();
 
     const res = await axios.get("http://127.0.0.1:8081/preprocess");
     const preprocess = res.data;
-    if (res) {
-      const stemTitle = res.data.map((title) => ({
-        title: title.stemmed_title,
-      }));
-      await Stemmed.createMany(stemTitle);
-    }
 
     const result = preprocess.map((article) => {
       const matchArticle = articles.filter((fa) => fa.id === article.id);
@@ -208,11 +201,21 @@ class ArticleController {
   }
 
   async cluster({ response, view }) {
+    await Cluster.truncate();
     const articlesQ = await Article.all();
     const articles = articlesQ.toJSON();
 
     const res = await axios.get("http://127.0.0.1:8081/clustering");
     const clustering = res.data;
+
+    if (res) {
+      const cluster = res.data.map((title) => ({
+        title: title.title,
+        stemmed_title: title.stemmed_title,
+        label: title.label,
+      }));
+      await Cluster.createMany(cluster);
+    }
 
     const result = clustering.map((article) => {
       const matchArticle = articles.filter((fa) => fa.id === article.id);
@@ -245,14 +248,14 @@ class ArticleController {
 
   async knn({ session, response, view }) {
     // const articlesQ = await Article.all();
-    const stemmedJos = await Stemmed.all();
+    const clusterJos = await Cluster.all();
     // const articles = articlesQ.toJSON();
-    const stemmed = stemmedJos.toJSON();
+    const cluster = clusterJos.toJSON();
 
     return minify(
       view.render("article/knn", {
         title: "Proses KNN",
-        articles: stemmed,
+        articles: cluster,
       })
     );
   }

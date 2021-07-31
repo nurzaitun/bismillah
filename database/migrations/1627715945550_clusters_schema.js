@@ -3,18 +3,20 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use("Schema");
 
-class StemmedSchema extends Schema {
+class ClustersSchema extends Schema {
   up() {
-    this.create("stemmeds", (table) => {
+    this.create("clusters", (table) => {
       table.increments();
       table.string("title");
+      table.string("stemmed_title");
+      table.integer("label");
       table.timestamps();
     });
   }
 
   down() {
-    this.drop("stemmeds");
+    this.drop("clusters");
   }
 }
 
-module.exports = StemmedSchema;
+module.exports = ClustersSchema;
