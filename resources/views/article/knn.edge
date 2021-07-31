@@ -1,0 +1,184 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+{{ style('assets/vendors/sliders/bootstrap-slider.min') }}
+{{ style('assets/css/custom') }}
+@endsection
+
+
+@section('heading')
+<div class="page-title text-center mb-5">
+  <h2>Proses KNN</h2>
+  {{--  <p class="text-subtitle text-muted">Data artikel yang telah dimasukkan.</p>  --}}
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section id="first" class="section">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="">Title Data</h4>
+      </div> 
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+     
+        <div class="card-body">
+            <table class='table table-striped' id="table">
+                <thead>
+                  <tr>
+                        <th>No</th>
+                      <!--
+                        <th>NIY</th>
+                        <th>Nama</th>
+                      -->
+                        <th>Title</th>
+                      <!--
+                        <th>Authors</th>
+                        <th>Venue</th>
+                        <th>Year</th>
+                      -->
+                    </tr>
+                </thead>
+                <tbody>
+                  @each((article,i) in articles)
+                    <tr>
+                      <td>{{ i+1}}</td>
+                      <!--
+                      <td>{{ article.nidn }}</td>
+                      <td>{{ article.niy }}</td>
+                      <td>{{ article.nama }}</td>
+                      -->
+                      <td>{{ article.title }}</td>
+                      <!--
+                      <td>{{ article.authors }}</td>
+                      <td>{{ article.venue }}</td>
+                      <td>{{ article.year }}</td>
+                      -->
+                    </tr>
+                  @endeach
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="second" class="section">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="">Options</h4>
+      </div> 
+      
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        @set("articles", [
+          {
+            title: "network for ai",
+          },
+          {
+            title: "network for ai",
+          },
+          {
+            title: "network for ai",
+          }
+        ])
+        <div class="card-body">
+          <div style="display: flex;justify-content:center;">
+            <div style="width:10%;border-right:1px solid black;display:flex; flex-direction:column; align-items:center;">
+              <div class="form-check form-check-secondary">
+                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  05
+                </label>
+              </div>
+              <div class="form-check form-check-secondary">
+                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  10
+                </label>
+              </div>
+              <div class="form-check form-check-secondary">
+                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  20
+                </label>
+              </div>
+              <h5 style="margin-top:5px;">Pilih Split</h5>
+            </div>
+            
+            <div style="width:20%; margin-left:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:40px;">
+              <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="6"/>
+              <h5 style="margin-top:10px;">Pilih Nilai K</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <a id="process" href="#" class="btn btn-primary">Proses</a>
+      </div>
+    </section>
+
+    <section id="loading">
+      <div id="loader"></div>
+      <h4 class="loading" style="" class="">Loading...</h4>
+    </section>
+    
+    </div>
+  </div>
+  @endsection
+  
+  @section('js')
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+{{ script('assets/vendors/sliders/bootstrap-slider.min') }}
+
+<script>
+
+  const slider = new Slider("#ex8", {
+    tooltip: 'always'
+  });
+
+    const first = document.querySelector("#first");
+    const second = document.querySelector("#second");
+    const loading = document.querySelector("#loading");
+    loading.style.display="none";
+    const unHideResult = () => {
+      first.style.display="none";
+      second.style.display="none";
+      loading.style.display="flex";
+      setTimeout(()=> {
+        window.location.href = "/articles/knn-result";
+      },2000);
+    }
+    process.addEventListener("click", unHideResult);
+
+  // $(document).ready(function() {
+    const table = $('#table').DataTable({
+  //     serverSide: true,
+  //     ajax: "{{ route('SchoolController.datatable') }}",
+  //     columns: [
+  //       { "data": "npsn", render: function(data, type, row, meta) {
+  //         return '<a href="/schools/'+ data +'">' + data + '</a>';
+  //       } },
+  //       { "data": "nama" },
+  //       { "data": "bentukPendidikan.nama" },
+  //       { "data": "wilayah.nama" },
+  //     ],
+  //     language: {
+  //       search: 'Cari',
+  //       paginate: {
+  //         previous: '<<',
+  //         next: '>>',
+  //       },
+  //     },
+    });
+  // });
+</script>
+@endsection

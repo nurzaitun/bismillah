@@ -1,0 +1,60 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+@endsection
+
+@section('heading')
+<div class="page-title text-center mb-3">
+  <h3>Hasil Perhitungan</h3>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section class="section">
+
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        @set("articles", [
+          {
+            niy: "001",
+            nama: "Nur Arofah S.KOM",
+            title: "network for ai",
+            hasil: "1"
+          },
+          {
+            niy: "002",
+            nama: "Nur Arofah S.KOM",
+            title: "network for ai",
+            hasil: "2"
+          },
+          {
+            niy: "003",
+            nama: "Nur Arofah S.KOM",
+            title: "network for ai",
+            hasil: "0"
+          }
+        ])
+        <div class="card-body text-center">
+            <h2 class="text-primary">Acuration 20%</h2>
+            <h2 class="text-info">Precision 20%</h2>
+            <h2 class="text-green">Recall 20%</h2>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+
+<script>
+
+</script>
+@endsection

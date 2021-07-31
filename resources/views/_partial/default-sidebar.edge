@@ -41,34 +41,29 @@
           <span>Hasil Clustering</span>
         </a>
       </li>
-      <li class="sidebar-item {{ url == route('ArticleController.clusterChart') ? 'active' : '' }}">
-        <a href="{{ route('ArticleController.clusterChart') }}" class='sidebar-link'>
-          <i data-feather="bar-chart-2" width="20"></i>
-          <span>Grafik Clustering</span>
-        </a>
-      </li>
+      
       <li class="sidebar-item {{ url == route('ArticleController.knn') ? 'active' : '' }}">
         <a href="{{ route('ArticleController.knn') }}" class='sidebar-link'>
           <i data-feather="refresh-ccw" width="20"></i>
           <span>Proses KNN</span>
         </a>
       </li>
-      <li class="sidebar-item {{ url == route('IndexController.index') ? 'active' : '' }}">
-        <a href="/" class='sidebar-link'>
+      <li class="sidebar-item {{ url == route('ArticleController.about') ? 'active' : '' }}">
+        <a href="{{ route('ArticleController.about') }}" class='sidebar-link'>
           <i data-feather="sun" width="20"></i>
           <span>About</span>
         </a>
       </li>
 
-      @if(config.get('app.env') === 'development')
-        <li class='sidebar-title'>Example</li>
-        <li class='sidebar-item {{ url == route('RegistrationController.index') ? 'active' : '' }}'>
-          <a href="/crud" class='sidebar-link'>
-            <i data-feather="file-text" width="20"></i>
-            <span>CRUD Example</span>
-          </a>
-        </li>
-      @endif
+      {{--  @if(config.get('app.env') === 'development')  --}}
+        {{--  <li class='sidebar-title'>Example</li>  --}}
+        {{--  <li class='sidebar-item {{ url == route('RegistrationController.index') ? 'active' : '' }}'>  --}}
+          {{--  <a href="/crud" class='sidebar-link'>  --}}
+            {{--  <i data-feather="file-text" width="20"></i>  --}}
+            {{--  <span>CRUD Example</span>  --}}
+          {{--  </a>  --}}
+        {{--  </li>  --}}
+      {{--  @endif  --}}
     </ul>
   </div>
   <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
