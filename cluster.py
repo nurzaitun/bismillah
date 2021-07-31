@@ -26,6 +26,13 @@ def clustering():
   response = labeled_title.to_dict('records')
   return json.dumps(response)
 
+@app.route("/knnprocess")
+def knnprocess():
+  print('proses knn...')
+  cluster = knn.knnprocessjos()
+  return cluster
+  # return json.dumps(cluster)
+
 app.run(
   port=8081,
   debug=True
