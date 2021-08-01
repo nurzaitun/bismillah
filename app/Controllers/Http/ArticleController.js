@@ -7,6 +7,7 @@ const minify = use("App/Helpers/Minify");
 const Article = use("App/Models/Article");
 const Author = use("App/Models/Author");
 const Cluster = use("App/Models/Cluster");
+const host = "http://127.0.0.1:8081";
 
 class ArticleController {
   async index({ response, view }) {
@@ -178,7 +179,7 @@ class ArticleController {
     const articlesQ = await Article.all();
     const articles = articlesQ.toJSON();
 
-    const res = await axios.get("http://127.0.0.1:8081/preprocess");
+    const res = await axios.get(`${host}/preprocess`);
     const preprocess = res.data;
 
     const result = preprocess.map((article) => {
@@ -205,7 +206,7 @@ class ArticleController {
     const articlesQ = await Article.all();
     const articles = articlesQ.toJSON();
 
-    const res = await axios.get("http://127.0.0.1:8081/clustering");
+    const res = await axios.get(`${host}/clustering`);
     const clustering = res.data;
 
     if (res) {
@@ -247,9 +248,7 @@ class ArticleController {
   }
 
   async knn({ session, response, view }) {
-    // const articlesQ = await Article.all();
     const clusterJos = await Cluster.all();
-    // const articles = articlesQ.toJSON();
     const cluster = clusterJos.toJSON();
 
     return minify(
@@ -261,9 +260,13 @@ class ArticleController {
   }
 
   async knnResult({ response, view }) {
+    const resLists = await axios.get(`${host}/knnprocesslist`);
+    const resDescribe = await axios.get(`${host}/knnprocessdescribe`);
     return minify(
       view.render("article/knnResult", {
         title: "Hasil Proses KNN",
+        lists: resLists.data,
+        describe: resDescribe.data,
       })
     );
   }

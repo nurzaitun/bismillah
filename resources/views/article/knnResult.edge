@@ -14,35 +14,227 @@
 <div class="row">
   <div class="col-12">
     <section class="section">
-
+      <h4>Daftar Hasil</h4>
       <div class="card">
         @if(flashMessage('article-success'))
           <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
         @endif
-        @set("articles", [
-          {
-            niy: "001",
-            nama: "Nur Arofah S.KOM",
-            title: "network for ai",
-            hasil: "1"
-          },
-          {
-            niy: "002",
-            nama: "Nur Arofah S.KOM",
-            title: "network for ai",
-            hasil: "2"
-          },
-          {
-            niy: "003",
-            nama: "Nur Arofah S.KOM",
-            title: "network for ai",
-            hasil: "0"
-          }
-        ])
-        <div class="card-body text-center">
-            <h2 class="text-primary">Acuration 20%</h2>
-            <h2 class="text-info">Precision 20%</h2>
-            <h2 class="text-green">Recall 20%</h2>
+        <div class="card-body">
+          <table class='table table-striped' id="table">
+            <thead>
+              <tr>
+                    <th>No</th>
+                  <!--
+                    <th>NIY</th>
+                    <th>Nama</th>
+                  -->
+                    <th>Akurasi</th>
+                  
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1</th>
+                </tr>
+            </thead>
+            <tbody>
+              @each((list,i) in lists)
+                <tr>
+                  <td>{{ i+1}}</td>
+                  <td>{{ list.akurasi }}</td>
+                  <td>{{ list.precision }}</td>
+                  <td>{{ list.recall }}</td>
+                  <td>{{ list.f1 }}</td>
+                </tr>
+              @endeach
+            </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <h4>Daftar Deskripsi</h4>
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-6">  
+                  <table class="table table-bordered mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center" colspan="2">Akurasi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-bold-500">Count</td>
+                        <td>{{describe.akurasi.count}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Mean</td>
+                        <td>{{describe.akurasi.mean}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Std</td>
+                        <td>{{describe.akurasi.std}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Min</td>
+                        <td>{{describe.akurasi.min}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">25%</td>
+                        <td>{{describe.akurasi["25%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">50%</td>
+                        <td>{{describe.akurasi["50%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">75%</td>
+                        <td>{{describe.akurasi["75%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Max</td>
+                        <td>{{describe.akurasi.max}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-6">  
+                  <table class="table table-bordered mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center" colspan="2">Precision</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-bold-500">Count</td>
+                        <td>{{describe.precision.count}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Mean</td>
+                        <td>{{describe.precision.mean}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Std</td>
+                        <td>{{describe.precision.std}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Min</td>
+                        <td>{{describe.precision.min}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">25%</td>
+                        <td>{{describe.precision["25%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">50%</td>
+                        <td>{{describe.precision["50%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">75%</td>
+                        <td>{{describe.precision["75%"]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold-500">Max</td>
+                        <td>{{describe.precision.max}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+              <div class="col-6">  
+                <table class="table table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center" colspan="2">Recall</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-bold-500">Count</td>
+                      <td>{{describe.recall.count}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Mean</td>
+                      <td>{{describe.recall.mean}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Std</td>
+                      <td>{{describe.recall.std}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Min</td>
+                      <td>{{describe.recall.min}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">25%</td>
+                      <td>{{describe.recall["25%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">50%</td>
+                      <td>{{describe.recall["50%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">75%</td>
+                      <td>{{describe.recall["75%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Max</td>
+                      <td>{{describe.recall.max}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-6">  
+                <table class="table table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center" colspan="2">F1</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-bold-500">Count</td>
+                      <td>{{describe.f1.count}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Mean</td>
+                      <td>{{describe.f1.mean}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Std</td>
+                      <td>{{describe.f1.std}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Min</td>
+                      <td>{{describe.f1.min}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">25%</td>
+                      <td>{{describe.f1["25%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">50%</td>
+                      <td>{{describe.f1["50%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">75%</td>
+                      <td>{{describe.f1["75%"]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-bold-500">Max</td>
+                      <td>{{describe.f1.max}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+          </div>
         </div>
       </div>
     </section>
