@@ -13,11 +13,8 @@ punctuation = f"’{string.punctuation}"
 
 def get_all_cluster(db):
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT id, stemmed_title FROM clusters")
+    cursor.execute("SELECT id, stemmed_title, label FROM clusters")
     clusters_all = cursor.fetchall()
-    clusters = json.dumps(clusters_all)
-    # print(articles)
-    # df = pd.DataFrame(articles)
-    # print(df)
-    # return df
-    return clusters
+    df = pd.DataFrame(clusters_all)
+    # title = df["stemmed_title"].values.tolist()
+    return df
