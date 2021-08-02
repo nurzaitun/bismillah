@@ -1,3 +1,5 @@
+
+
 # Adonis fullstack application
 
 This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
@@ -29,3 +31,25 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+
+------
+
+### Running update terakhir
+
+- Pastikan database sudah running
+
+- untuk javascript/adonisjs:
+
+  ```bash
+  npx adonis migration:run
+  ```
+
+- untuk python/Flask:
+
+  pastikan sudah di dalam project direktori dan terkoneksi internet
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+- kemudian jalankan seperti biasa
