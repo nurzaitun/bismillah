@@ -1,0 +1,51 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+{{style('assets/vendors/choices.js/choices.min.css') }}
+@endsection
+
+@section('heading')
+<div class="page-title">
+  <h3>Setting KNN</h3>
+  <p class="text-subtitle text-muted">Hanya untuk pribadi dan rahasia</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section class="section">
+
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        <div class="card-body">
+          <form action="{{ route('IndexController.updateSettingKnn') }}" method="POST">
+          {{ csrfField() }}
+          <div class="form-group">
+            <select name="mode" class="choices form-select">
+                <option value="0" {{mode ? "" : "selected"}}>Constant</option>
+                <option value="1" {{mode ? "selected" : ""}}>Not Constant</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Ganti Mode</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+{{ script('assets/vendors/choices.js/choices.min.js') }}
+
+
+<script>
+
+</script>
+@endsection

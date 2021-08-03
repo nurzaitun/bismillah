@@ -12,6 +12,7 @@ const Akurasi = use("App/Models/Akurasi");
 const Precision = use("App/Models/Precision");
 const Recall = use("App/Models/Recall");
 const F1 = use("App/Models/F1");
+const Mode = use("App/Models/Mode");
 const host = "http://127.0.0.1:8081";
 
 class ArticleController {
@@ -265,7 +266,8 @@ class ArticleController {
   }
 
   async knnResult({ response, view }) {
-    const NOTCONSTANT = false;
+    const mode = await Mode.all();
+    const NOTCONSTANT = mode.toJSON()[0].constant;
     let knnList = null;
     let akurasiTop = null;
     let precisionTop = null;

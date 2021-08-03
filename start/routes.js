@@ -4,6 +4,8 @@ const Route = use("Route");
 
 Route.get("/", "IndexController.index");
 Route.get("/crud", "IndexController.crud");
+Route.get("/settingknn", "IndexController.settingKnn");
+Route.post("/updatesettingknn", "IndexController.updateSettingKnn");
 Route.get("/about", "ArticleController.about");
 
 Route.group(() => {
