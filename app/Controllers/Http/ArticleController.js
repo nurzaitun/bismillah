@@ -7,6 +7,7 @@ const minify = use("App/Helpers/Minify");
 const Article = use("App/Models/Article");
 const Author = use("App/Models/Author");
 const Cluster = use("App/Models/Cluster");
+const Knnresult = use("App/Models/Knnresult");
 const host = "http://127.0.0.1:8081";
 
 class ArticleController {
@@ -313,6 +314,8 @@ class ArticleController {
         max: dataDescribe.f1.max.toFixed(2),
       },
     };
+    // await Knnresult.createMany(lists);
+    console.log(describe);
     return minify(
       view.render("article/knnResult", {
         title: "Hasil Proses KNN",
