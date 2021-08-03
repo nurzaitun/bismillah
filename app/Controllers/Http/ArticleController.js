@@ -262,11 +262,62 @@ class ArticleController {
   async knnResult({ response, view }) {
     const resLists = await axios.get(`${host}/knnprocesslist`);
     const resDescribe = await axios.get(`${host}/knnprocessdescribe`);
+    const dataDescribe = resDescribe.data;
+    const lists = resLists.data.map((item) => {
+      return {
+        akurasi: item.akurasi.toFixed(2),
+        precision: item.precision.toFixed(2),
+        recall: item.recall.toFixed(2),
+        f1: item.f1.toFixed(2),
+      };
+    });
+    const describe = {
+      akurasi: {
+        count: parseInt(dataDescribe.akurasi.count),
+        mean: dataDescribe.akurasi.mean.toFixed(2),
+        std: dataDescribe.akurasi.std.toFixed(2),
+        min: dataDescribe.akurasi.min.toFixed(2),
+        "25%": dataDescribe.akurasi["25%"].toFixed(2),
+        "50%": dataDescribe.akurasi["50%"].toFixed(2),
+        "75%": dataDescribe.akurasi["75%"].toFixed(2),
+        max: dataDescribe.akurasi.max.toFixed(2),
+      },
+      precision: {
+        count: parseInt(dataDescribe.precision.count),
+        mean: dataDescribe.precision.mean.toFixed(2),
+        std: dataDescribe.precision.std.toFixed(2),
+        min: dataDescribe.precision.min.toFixed(2),
+        "25%": dataDescribe.precision["25%"].toFixed(2),
+        "50%": dataDescribe.precision["50%"].toFixed(2),
+        "75%": dataDescribe.precision["75%"].toFixed(2),
+        max: dataDescribe.precision.max.toFixed(2),
+      },
+      recall: {
+        count: parseInt(dataDescribe.recall.count),
+        mean: dataDescribe.recall.mean.toFixed(2),
+        std: dataDescribe.recall.std.toFixed(2),
+        min: dataDescribe.recall.min.toFixed(2),
+        "25%": dataDescribe.recall["25%"].toFixed(2),
+        "50%": dataDescribe.recall["50%"].toFixed(2),
+        "75%": dataDescribe.recall["75%"].toFixed(2),
+        max: dataDescribe.recall.max.toFixed(2),
+      },
+      f1: {
+        count: parseInt(dataDescribe.f1.count),
+        mean: dataDescribe.f1.mean.toFixed(2),
+        std: dataDescribe.f1.std.toFixed(2),
+        min: dataDescribe.f1.min.toFixed(2),
+        "25%": dataDescribe.f1["25%"].toFixed(2),
+        "50%": dataDescribe.f1["50%"].toFixed(2),
+        "75%": dataDescribe.f1["75%"].toFixed(2),
+        max: dataDescribe.f1.max.toFixed(2),
+      },
+    };
     return minify(
       view.render("article/knnResult", {
         title: "Hasil Proses KNN",
-        lists: resLists.data,
-        describe: resDescribe.data,
+        lists,
+        describe,
       })
     );
   }
