@@ -8,6 +8,10 @@ const Article = use("App/Models/Article");
 const Author = use("App/Models/Author");
 const Cluster = use("App/Models/Cluster");
 const Knnresult = use("App/Models/Knnresult");
+const Akurasi = use("App/Models/Akurasi");
+const Precision = use("App/Models/Precision");
+const Recall = use("App/Models/Recall");
+const F1 = use("App/Models/F1");
 const host = "http://127.0.0.1:8081";
 
 class ArticleController {
@@ -315,7 +319,55 @@ class ArticleController {
       },
     };
     // await Knnresult.createMany(lists);
-    console.log(describe);
+
+    // const akurasi = new Akurasi();
+    // akurasi.count = parseInt(dataDescribe.akurasi.count);
+    // akurasi.mean = dataDescribe.akurasi.mean.toFixed(2);
+    // akurasi.std = dataDescribe.akurasi.std.toFixed(2);
+    // akurasi.min = dataDescribe.akurasi.min.toFixed(2);
+    // akurasi["25%"] = dataDescribe.akurasi["25%"].toFixed(2);
+    // akurasi["50%"] = dataDescribe.akurasi["50%"].toFixed(2);
+    // akurasi["75%"] = dataDescribe.akurasi["75%"].toFixed(2);
+    // akurasi.max = dataDescribe.akurasi.max.toFixed(2);
+    // await akurasi.save();
+
+    // const precision = new Precision();
+    // precision.count = parseInt(dataDescribe.precision.count);
+    // precision.mean = dataDescribe.precision.mean.toFixed(2);
+    // precision.std = dataDescribe.precision.std.toFixed(2);
+    // precision.min = dataDescribe.precision.min.toFixed(2);
+    // precision["25%"] = dataDescribe.precision["25%"].toFixed(2);
+    // precision["50%"] = dataDescribe.precision["50%"].toFixed(2);
+    // precision["75%"] = dataDescribe.precision["75%"].toFixed(2);
+    // precision.max = dataDescribe.precision.max.toFixed(2);
+    // await precision.save();
+
+    // const recall = new Recall();
+    // recall.count = parseInt(dataDescribe.recall.count);
+    // recall.mean = dataDescribe.recall.mean.toFixed(2);
+    // recall.std = dataDescribe.recall.std.toFixed(2);
+    // recall.min = dataDescribe.recall.min.toFixed(2);
+    // recall["25%"] = dataDescribe.recall["25%"].toFixed(2);
+    // recall["50%"] = dataDescribe.recall["50%"].toFixed(2);
+    // recall["75%"] = dataDescribe.recall["75%"].toFixed(2);
+    // recall.max = dataDescribe.recall.max.toFixed(2);
+    // await recall.save();
+    // console.log(describe);
+
+    // const f1 = new F1();
+    // f1.count = parseInt(dataDescribe.f1.count);
+    // f1.mean = dataDescribe.f1.mean.toFixed(2);
+    // f1.std = dataDescribe.f1.std.toFixed(2);
+    // f1.min = dataDescribe.f1.min.toFixed(2);
+    // f1["25%"] = dataDescribe.f1["25%"].toFixed(2);
+    // f1["50%"] = dataDescribe.f1["50%"].toFixed(2);
+    // f1["75%"] = dataDescribe.f1["75%"].toFixed(2);
+    // f1.max = dataDescribe.f1.max.toFixed(2);
+    // await f1.save();
+
+    const akurasi = await Akurasi.all();
+    console.log(akurasi.toJSON()[0]);
+
     return minify(
       view.render("article/knnResult", {
         title: "Hasil Proses KNN",
