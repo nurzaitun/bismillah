@@ -44,12 +44,10 @@ adonis migration:run
   npx adonis migration:run
   ```
 
-- untuk python/Flask:
-
-  pastikan sudah di dalam project direktori dan terkoneksi internet
+  selanjutnya:
 
   ```bash
-  pip install -r requirements.txt
+  npx adonis seed
   ```
 
 - kemudian jalankan seperti biasa
