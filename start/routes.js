@@ -6,7 +6,9 @@ Route.get("/", "IndexController.index");
 Route.get("/crud", "IndexController.crud");
 Route.get("/settingknn", "IndexController.settingKnn");
 Route.post("/updatesettingknn", "IndexController.updateSettingKnn");
-Route.get("/about", "ArticleController.about");
+Route.get("/information-retrival", "ArticleController.infoRGet");
+Route.post("/information-retrival", "ArticleController.infoRPost");
+Route.get("/information-retrival/:search", "ArticleController.resultInfoR");
 
 Route.group(() => {
   Route.on("404").render("error/404", { title: "Not Found" }).as("404");

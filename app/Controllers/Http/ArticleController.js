@@ -369,12 +369,45 @@ class ArticleController {
     );
   }
 
-  async about({ response, view }) {
+  async infoRGet({ request, response, view }) {
+    // const res = await Cluster.query()
+    //   .where("stemmed_title", "LIKE", "%model design%")
+    //   .fetch();
+    // const dataIrs = res.toJSON();
+
+    // console.log(res.toJSON());
     return minify(
-      view.render("article/about", {
-        title: "About",
+      view.render("article/ir", {
+        title: "Information Retrival",
+        // dataIrs,
       })
     );
+  }
+
+  async infoRPost({ request, response, view }) {
+    const dataSearch = request.post();
+    response.redirect("/information-retrival/" + dataSearch.search);
+  }
+
+  async resultInfoR({ request, response, view, params }) {
+    if (params.search !== "null") {
+      console.log(decodeURI(params.search));
+      const res = await Cluster.query()
+        .where("stemmed_title", "LIKE", "%" + params.search + "%")
+        .fetch();
+      const dataIrs = res.toJSON();
+      if (dataIrs.length < 1) {
+        response.redirect("/information-retrival");
+      }
+      return minify(
+        view.render("article/ir", {
+          title: "Information Retrival",
+          dataIrs,
+        })
+      );
+    } else {
+      response.redirect("/information-retrival");
+    }
   }
 }
 

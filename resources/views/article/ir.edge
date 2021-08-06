@@ -1,0 +1,78 @@
+@layout('_layout/default')
+
+@section('css')
+{{ style('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+<style>
+  .search-input {
+    width: 35%;
+    margin-bottom: 25px;
+  }
+
+  .result-search{
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+</style>
+@endsection
+
+@section('heading')
+<div class="page-title">
+  <h3 class="mb-0">Information Retrival</h3>
+  <p class="text-subtitle text-muted">Cari dan temukan judul yang kamu inginkan</p>
+</div>
+@endsection
+
+@section('content')
+<div class="row">
+  <div class="col-12">
+    <section class="section">
+      <div class="card">
+        <div class="card-body">
+          <form action="{{route('ArticleController.infoRPost')}}"  method="POST">
+          <div class="d-flex align-items-center flex-column">
+              {{ csrfField() }}
+              <input name="search" class="form-control search-input" type="text" placeholder="Masukkan judul..."/>
+              <button type="submit" class="btn btn-primary">Cari</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        @if(flashMessage('article-success'))
+          <div class="alert alert-success" style="border-radius: 0">{{ flashMessage('article-success') }}</div>
+        @endif
+        <div class="card-body">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Hasil Pencarian</h4>
+        </div>
+        <div class="card-body">
+          <div class="result-search">
+            {{dataIrs.length < 1 ? "data tidak tersedia" : "==> " + dataIrs.length +" data ditemukan"}}
+          </div>
+          @each((data,i) in dataIrs)
+            <p>{{data.stemmed_title}}</p>
+          @endeach
+        </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endsection
+
+@section('js')
+{{ script('assets/vendors/jquery-datatables/jquery-datatables.min') }}
+{{ script('assets/vendors/jquery-datatables/jquery-datatables-bootstrap.min') }}
+
+<script>
+  const field = document.querySelector('[name="search"]');
+
+  field.addEventListener('keypress', function ( event ) {  
+     const key = event.keyCode;
+      if (key === 32) {
+        event.preventDefault();
+      }
+  });
+</script>
+@endsection
