@@ -23,6 +23,7 @@ def clustering():
   print('clustering...')
   cleaned_data = knn.preprocess()
   labeled_title = knn.kmean.title_labeling(cleaned_data)
+  print(labeled_title)
   response = labeled_title.to_dict('records')
   return json.dumps(response)
 

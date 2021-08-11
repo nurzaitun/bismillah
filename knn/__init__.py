@@ -19,6 +19,7 @@ def preprocess():
   database = db.get_connection()
   articles = preprocessor.get_all_articles(database)
   articles_en = preprocessor.filter_by_title_lang(articles, 'en')
+  # print(articles_en)
   tokenized_title = preprocessor.tokenize_title(articles_en)
   stemmed_title = preprocessor.stem_title(tokenized_title)
   return stemmed_title
@@ -37,7 +38,7 @@ def knnprocesslist():
 
   kf = KFold(n_splits=10)
 
-  k = 5
+  k = 1
 
   knn = KNeighborsClassifier(n_neighbors=k)
 
@@ -87,8 +88,7 @@ def knnprocessdescribe():
 
   kf = KFold(n_splits=10)
 
-  k = 5
-
+  k = 1
   knn = KNeighborsClassifier(n_neighbors=k)
 
   list_akurasi = []
