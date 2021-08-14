@@ -38,7 +38,7 @@ def knnprocesslist():
 
   kf = KFold(n_splits=10)
 
-  k = 1
+  k = 5
 
   knn = KNeighborsClassifier(n_neighbors=k)
 
@@ -88,7 +88,7 @@ def knnprocessdescribe():
 
   kf = KFold(n_splits=10)
 
-  k = 1
+  k = 5
   knn = KNeighborsClassifier(n_neighbors=k)
 
   list_akurasi = []
