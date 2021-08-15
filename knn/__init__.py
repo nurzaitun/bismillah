@@ -19,7 +19,6 @@ def preprocess():
   database = db.get_connection()
   articles = preprocessor.get_all_articles(database)
   articles_en = preprocessor.filter_by_title_lang(articles, 'en')
-  # print(articles_en)
   tokenized_title = preprocessor.tokenize_title(articles_en)
   stemmed_title = preprocessor.stem_title(tokenized_title)
   return stemmed_title
@@ -62,9 +61,9 @@ def knnprocesslist():
     fn= cm[1,0]
   
     akurasi   = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='macro')
-    recall    = recall_score(y_test, y_pred, average='macro')
-    f1        = f1_score (y_test, y_pred, average='macro')
+    precision = precision_score(y_test, y_pred, average='micro')
+    recall    = recall_score(y_test, y_pred, average='micro')
+    f1        = f1_score (y_test, y_pred, average='micro')
 
     list_akurasi.append(akurasi)
     list_precision.append(precision)

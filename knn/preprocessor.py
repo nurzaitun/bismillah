@@ -5,25 +5,14 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.corpus import stopwords
-import gcld3
 import re
-import spacy
-from spacy_langdetect import LanguageDetector
-from spacy.language import Language
+import fasttext
 
-detector = gcld3.NNetLanguageIdentifier(min_num_bytes=0,max_num_bytes=1000)
 regex = re.compile('[^a-zA-Z]')
 stopwords = stopwords.words("english")
 punctuation = f"’{string.punctuation}"
-
-nlp = spacy.load('en_core_web_sm')
-
-@Language.factory('language_detector')
-def language_detector(nlp, name):
-    return LanguageDetector()
-
-nlp.add_pipe('language_detector', last=True)
-
+PRETRAINED_MODEL_PATH = '/home/hdinjos/Documents/learn/aha/lid.176.bin'
+model = fasttext.load_model(PRETRAINED_MODEL_PATH)
 
 def get_all_articles(db):
     cursor = db.cursor(dictionary=True)
@@ -34,16 +23,9 @@ def get_all_articles(db):
 
 
 def filter_by_title_lang(datum, lang):
-    list_title = datum['title'].values.tolist()
-    title_en=[]
-    for title in list_title:
-        doc = nlp(title.lower())
-        if (doc._.language["language"]) == 'en':
-            title_en.append(title)
-    filter = lambda x: detector.FindLanguage(text=x.lower()).language == lang
-    # result = datum.loc[datum["title"].apply(filter)]
-    result = datum[datum["title"].isin(title_en)]
-    # print("ini filter result", result)
+    filter = lambda x: model.predict(x.lower())[0][0][9:] == lang
+    result = datum.loc[datum["title"].apply(filter)]
+    # result = datum[datum["title"].isin(title_en)]
     return result
 
 
@@ -53,12 +35,10 @@ def tokenize_title(datum):
         text = text.lower()
         clean_number = re.sub(r"\d+", "", text.lower())
         clean_char = regex.sub(" ", clean_number)
-        # print("BAABABA  ", clean_char)
         text = " ".join([word for word in clean_char.split() if word not in stopwords])
         return text
 
     cleaned_title = list(map(clean_string, datum["title"].values.tolist()))
-    # print(cleaned_title)
     datum.insert(len(datum.columns), "cleaned_title", cleaned_title)
     return datum
 
