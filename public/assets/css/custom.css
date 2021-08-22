@@ -12,7 +12,8 @@
 }
 
 .loading {
-  margin-left:-50px; margin-top:10px;
+  margin-left: -50px;
+  margin-top: 10px;
 }
 
 #loader {
@@ -31,13 +32,21 @@
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Add animation to "page content" */
@@ -46,19 +55,79 @@
   -webkit-animation-name: animatebottom;
   -webkit-animation-duration: 1s;
   animation-name: animatebottom;
-  animation-duration: 1s
+  animation-duration: 1s;
 }
 
 @-webkit-keyframes animatebottom {
-  from { bottom:-100px; opacity:0 } 
-  to { bottom:0px; opacity:1 }
+  from {
+    bottom: -100px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0px;
+    opacity: 1;
+  }
 }
 
-@keyframes animatebottom { 
-  from{ bottom:-100px; opacity:0 } 
-  to{ bottom:0; opacity:1 }
+@keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
 }
 
 #ex1Slider .slider-selection {
-	background: #475f7b;
+  background: #475f7b;
+}
+
+body {
+  color: #000 !important;
+}
+
+.table {
+  color: #000 !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  color: #000 !important;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #000;
+}
+
+.form-control::placeholder {
+  color: #5f5f5f;
+}
+
+input .form-control {
+  border: 1px solid blue;
+}
+
+.btn.btn-primary {
+  background-color: #35dc94;
+  border-color: #35dc94;
+  font-weight: 800;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #35dc94;
+  border-color: #35dc94;
 }
