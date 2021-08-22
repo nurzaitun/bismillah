@@ -370,10 +370,7 @@ class ArticleController {
   }
 
   async infoRGet({ request, response, view }) {
-    // const res = await Cluster.query()
-    //   .where("stemmed_title", "LIKE", "%model design%")
-    //   .fetch();
-    // const dataIrs = res.toJSON();
+    const res = await Cluster.all();
 
     // console.log(res.toJSON());
     return minify(
@@ -386,16 +383,30 @@ class ArticleController {
 
   async infoRPost({ request, response, view }) {
     const dataSearch = request.post();
-    response.redirect("/information-retrival/" + dataSearch.search);
+    response.redirect(
+      "/information-retrival/" + dataSearch.search.split(" ").join("-")
+    );
   }
 
   async resultInfoR({ request, response, view, params }) {
     if (params.search !== "null") {
-      console.log(decodeURI(params.search));
-      const res = await Cluster.query()
-        .where("stemmed_title", "LIKE", "%" + params.search + "%")
-        .fetch();
-      const dataIrs = res.toJSON();
+      const resCluster = await Cluster.all();
+      const newRes = resCluster.toJSON();
+      const dataIrs = newRes.filter(
+        (res) =>
+          res.stemmed_title
+            .toLowerCase()
+            .includes(params.search.toLowerCase().split("-").join(" ")) ||
+          res.title
+            .toLowerCase()
+            .includes(params.search.toLowerCase().split("-").join(" "))
+      );
+      console.log(dataIrs);
+
+      // const res = await Cluster.query()
+      //   .where("stemmed_title", "LIKE", "%" + params.search + "%")
+      //   .fetch();
+      // const dataIrs = res.toJSON();
       if (dataIrs.length < 1) {
         response.redirect("/information-retrival");
       }
