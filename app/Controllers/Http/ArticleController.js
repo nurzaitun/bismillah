@@ -15,6 +15,10 @@ const F1 = use("App/Models/F1");
 const Mode = use("App/Models/Mode");
 const host = "http://127.0.0.1:8081";
 
+const getUniqueListBy = (arr, key) => {
+  return [...new Map(arr.map((item) => [item[key], item])).values()];
+};
+
 class ArticleController {
   async index({ response, view }) {
     const authors = (await Author.all()).toJSON();
@@ -197,12 +201,12 @@ class ArticleController {
           }
         : article;
     });
+    const realResult = getUniqueListBy(result, "title");
 
-    // console.log(session.all());
     return minify(
       view.render("article/preprocess", {
         title: "Hasil Preprocessing",
-        articles: result,
+        articles: realResult,
       })
     );
   }
@@ -233,11 +237,14 @@ class ArticleController {
           }
         : article;
     });
+    // console.log(result);
+
+    const realResult = getUniqueListBy(result, "title");
 
     return minify(
       view.render("article/cluster", {
         title: "Hasil Clustering",
-        articles: result,
+        articles: realResult,
       })
     );
   }
@@ -256,11 +263,12 @@ class ArticleController {
   async knn({ session, response, view }) {
     const clusterJos = await Cluster.all();
     const cluster = clusterJos.toJSON();
+    const realCluster = getUniqueListBy(cluster, "title");
 
     return minify(
       view.render("article/knn", {
         title: "Proses KNN",
-        articles: cluster,
+        articles: realCluster,
       })
     );
   }
@@ -372,11 +380,9 @@ class ArticleController {
   async infoRGet({ request, response, view }) {
     const res = await Cluster.all();
 
-    // console.log(res.toJSON());
     return minify(
       view.render("article/ir", {
         title: "Information Retrival",
-        // dataIrs,
       })
     );
   }
@@ -392,7 +398,8 @@ class ArticleController {
     if (params.search !== "null") {
       const resCluster = await Cluster.all();
       const newRes = resCluster.toJSON();
-      const dataIrs = newRes.filter(
+      const realRes = getUniqueListBy(newRes, "title");
+      const dataIrs = realRes.filter(
         (res) =>
           res.stemmed_title
             .toLowerCase()
@@ -401,12 +408,7 @@ class ArticleController {
             .toLowerCase()
             .includes(params.search.toLowerCase().split("-").join(" "))
       );
-      console.log(dataIrs);
 
-      // const res = await Cluster.query()
-      //   .where("stemmed_title", "LIKE", "%" + params.search + "%")
-      //   .fetch();
-      // const dataIrs = res.toJSON();
       if (dataIrs.length < 1) {
         response.redirect("/information-retrival");
       }
