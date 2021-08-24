@@ -1,6 +1,5 @@
 import string
 import pandas as pd
-from langdetect import detect, detect_langs
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer, WordNetLemmatizer
