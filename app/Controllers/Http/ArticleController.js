@@ -22,12 +22,19 @@ const getUniqueListBy = (arr, key) => {
 class ArticleController {
   async index({ response, view }) {
     const authors = (await Author.all()).toJSON();
+    // await console.log(authors);
+    console.log("jjjjjj");
+    // const aha = await axios.get(
+    //   `https://scholar.google.com/citations?hl=id&user=ql1jXW8AAAAJ`
+    // );
+    // console.log(aha.data);
     const unscrapedAuthors = authors
       .filter((a) => !a.scraped)
       .map(async (author) => {
         const res = await axios.get(
           `https://scholar.google.com/citations?hl=id&user=${author.google_scholar_id}`
         );
+        // await console.log("WWKWKW", res);
         const $ = cheerio.load(res.data);
         const domPublications = $("#gsc_a_t .gsc_a_tr");
         const publications = [];
